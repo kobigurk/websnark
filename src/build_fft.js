@@ -20,7 +20,7 @@
 const bigInt = require("big-integer");
 const utils = require("./utils.js");
 
-module.exports = function buildFFT(module, prefix, f1mPrefix) {
+module.exports = function buildFFT(module, prefix, f1mPrefix, overrideNr) {
 
     const n64 = module.modules[f1mPrefix].n64;
     const n8 = n64*8;
@@ -33,9 +33,14 @@ module.exports = function buildFFT(module, prefix, f1mPrefix) {
         rem = rem.shiftRight(1);
     }
 
-    let nr = bigInt(2);
+    let nr;
 
-    while ( nr.modPow(q.shiftRight(1), q).equals(1) ) nr = nr.add(1);
+    if (overrideNr) {
+      nr = bigInt(overrideNr);
+    } else {
+      nr = bigInt(2);
+      while ( nr.modPow(q.shiftRight(1), q).equals(1) ) nr = nr.add(1);
+    }
 
     const w = new Array(maxBits+1);
     w[maxBits] = nr.modPow(rem, q);

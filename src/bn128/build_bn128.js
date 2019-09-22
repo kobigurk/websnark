@@ -34,7 +34,7 @@ module.exports = function buildBN128(module, _prefix) {
     buildF1(module, r, "fr", "frm");
     const g1mPrefix = buildCurve(module, "g1m", "f1m");
     buildMultiexp(module, "g1m", "g1m", "f1m", "fr");
-    buildFFT(module, "fft", "frm");
+    buildFFT(module, "fft", "frm", bigInt(7));
     buildPol(module, "pol", "frm");
 
     const f2mPrefix = buildF2m(module, "f1m_neg", "f2m", "f1m");
