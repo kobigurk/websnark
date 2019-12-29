@@ -111,7 +111,7 @@ function calculateBuffLen(provingKey) {
     size += provingKey.nVars* (32*2);
     size += provingKey.nVars* (32*4);
     size += (provingKey.nVars - provingKey.nPublic  - 1)* (32*2);
-    size += provingKey.domainSize * (32*2);
+    size += (provingKey.domainSize - 1) * (32*2);
 
     return size;
 }
@@ -175,7 +175,7 @@ for (let i=provingKey.nPublic+1; i<provingKey.nVars; i++) {
 }
 
 writeUint32ToPointer(h, pPointsHExps, h.offset);
-for (let i=0; i<provingKey.domainSize; i++) {
+for (let i=0; i<provingKey.domainSize - 1; i++) {
     writePoint(h, provingKey.hExps[i]);
 }
 
